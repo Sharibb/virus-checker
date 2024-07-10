@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 YARA_RULES_FOLDER = 'yara_rules'
-VIRUSTOTAL_API_KEY = '5bc69ab2e3a8259893a4ddf54b6b555a9fabe3afab6e28fa8d62ef670cddb866'  # Replace with your VirusTotal API key
+VIRUSTOTAL_API_KEY = 'YOUR_API_KEY'  # Replace with your VirusTotal API key
 
 # Ensure upload directory exists
 if not os.path.exists(UPLOAD_FOLDER):
