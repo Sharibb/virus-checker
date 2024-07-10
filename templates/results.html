@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Scan Results</h1>
+
+        <!-- VirusTotal Results Section -->
+        <div class="results-section">
+            <h2>VirusTotal Results</h2>
+            <div class="virustotal-results">
+                <h3>Summary</h3>
+                <p>Scan Date: {{ virustotal_results.scan_date }}</p>
+                <p>Positives: {{ virustotal_results.positives }}</p>
+                <p>Total: {{ virustotal_results.total }}</p>
+                <h3>Detailed Report</h3>
+                <table class="vt-results">
+                    <thead>
+                        <tr>
+                            <th>Antivirus</th>
+                            <th>Result</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for av, details in virustotal_results.scans.items() %}
+                            <tr>
+                                <td>{{ av }}</td>
+                                <td>{{ details.result }}</td>
+                                <td>{{ details.update }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- YARA Results Section -->
+        {% if yara_results %}
+        <div class="results-section">
+            <h2>YARA Results</h2>
+            <ul class="yara-results">
+                {% for result in yara_results %}
+                    <li>{{ result }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div class="results-section">
+            <p>No YARA matches found.</p>
+        </div>
+        {% endif %}
+
+        <!-- Upload Another File Button -->
+        <a href="/" class="btn btn-primary">Upload Another File</a>
+    </div>
+
+    <!-- Bootstrap JS (if needed) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Your custom JavaScript file -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

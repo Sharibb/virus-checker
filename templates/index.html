@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://coolbackgrounds.io/images/backgrounds/index/compute-ea4c57a4.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #uploadForm {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+    </style>
+    <title>Upload File</title>
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Upload File to Check for Malicious Content</h1>
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" class="form-control-file" required>
+            <button type="submit" class="btn btn-primary">Upload File</button>
+        </form>
+        <div id="loadingMessage" class="mt-3" style="display: none;">Please wait for the scan to be completed...</div>
+        <div id="results" class="mt-3"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            var resultsDiv = document.getElementById('results');
+
+            resultsDiv.innerHTML = '';
+            alert('Please wait for the scan to be completed...');
+
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    resultsDiv.innerHTML = `<p>Error: ${data.error}</p>`;
+                } else {
+                    setTimeout(function() {
+                        checkScanStatus(data.scan_id, data.yara_results, 0);
+                    }, 10000);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `<p>Error: ${error}</p>`;
+            });
+        });
+
+        function checkScanStatus(scan_id, yara_results, retries) {
+            fetch(`/check_scan/${scan_id}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.response_code !== 1 && retries < 10) {
+                    setTimeout(function() {
+                        checkScanStatus(scan_id, yara_results, retries + 1);
+                    }, 10000);
+                } else if (data.response_code === 1) {
+                    window.location.href = `/results/${scan_id}?yara_results=${encodeURIComponent(yara_results)}`;
+                } else {
+                    document.getElementById('results').innerHTML = '<p>Error: Scan report not ready after multiple attempts. Please try again later.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('results').innerHTML = `<p>Error: ${error}</p>`;
+            });
+        }
+    </script>
+</body>
+</html>

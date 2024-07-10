@@ -1,0 +1,134 @@
+/* Reset and basic styles */
+body {
+    background: url('https://coolbackgrounds.io/images/backgrounds/index/compute-ea4c57a4.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    width: 80%;
+    max-width: 800px; /* Increased max-width for larger screens */
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 20px; /* Added margin bottom for headings */
+}
+
+/* Form styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+}
+
+button, .btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block; /* Changed display to inline-block for button alignment */
+    margin-top: 20px; /* Adjusted margin */
+    text-decoration: none;
+}
+
+button:hover, .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Results section styles */
+.results-section {
+    margin-top: 20px;
+    border-top: 1px solid #ccc; /* Added border-top for separation */
+    padding-top: 20px; /* Added padding top for separation */
+}
+
+.results-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.results-section ul li {
+    background: #f8f9fa; /* Lighter background */
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added box-shadow for card effect */
+}
+
+.results-section ul li::before {
+    content: "\2022";  /* Use bullet point for list items */
+    color: #007bff; /* Match with primary button color */
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* VirusTotal results table styles */
+.virustotal-results table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff; /* White background */
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.virustotal-results th, .virustotal-results td {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    text-align: left;
+}
+
+.virustotal-results th {
+    background-color: #f8f9fa; /* Light gray background for header */
+    font-weight: bold;
+}
+
+/* YARA results section styles */
+.yara-results {
+    margin-top: 20px;
+    border-top: 1px solid #ccc; /* Added border-top for separation */
+    padding-top: 20px; /* Added padding top for separation */
+}
+
+.yara-results ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.yara-results ul li {
+    background: #f8f9fa; /* Lighter background */
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added box-shadow for card effect */
+}
+
+.yara-results ul li::before {
+    content: "\2022";  /* Use bullet point for list items */
+    color: #dc3545; /* Match with danger color */
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+/* Loading message styles */
+.loading-message {
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
